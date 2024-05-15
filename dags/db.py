@@ -2,7 +2,7 @@ import yaml
 import psycopg2
 from airflow import DAG
 from airflow.operators.python_operator import PythonOperator
-from datetime import datetime
+from datetime import datetime, timedelta
 
 # Define the function to read the db-secrets.yaml file and extract the credentials
 def read_db_secrets():
