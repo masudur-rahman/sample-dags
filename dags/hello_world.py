@@ -18,7 +18,7 @@ default_args = {
 
 # Define the DAG
 dag = DAG(
-    'hello_world_dag',
+    'hello_world',
     default_args=default_args,
     description='A simple DAG that prints "Hello, World!" every 5 minutes',
     schedule_interval='*/5 * * * *',

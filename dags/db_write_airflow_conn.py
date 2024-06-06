@@ -11,11 +11,12 @@ default_args = {
 
 # Define the DAG
 with DAG(
-    dag_id="postgres_operator_dag",
+    dag_id="db_write_airflow_conn",
     default_args=default_args,
     start_date=datetime.datetime(2020, 2, 2),
     schedule_interval="@once",
     catchup=False,
+    tags=["cloudsql", "postgres"]
 ) as dag:
 
     # Task to create the pet table

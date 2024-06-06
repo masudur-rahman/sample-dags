@@ -42,10 +42,11 @@ default_args = {
 }
 
 dag = DAG(
-    'db_access_dag',
+    'db_connect_vault',
     default_args=default_args,
     description='A simple DAG to read DB secrets and access the database',
     schedule_interval='@once',
+    tags=["postgres", "vault"]
 )
 
 # Define the tasks
