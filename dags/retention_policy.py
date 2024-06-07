@@ -7,6 +7,9 @@ import shutil
 import os
 from dateutil.parser import parse
 
+logs_path = None
+retention_days = None
+cron_schedule = None
 
 # Function to extract datetime from folder name (generic)
 def extract_datetime(folder_name):
@@ -30,8 +33,10 @@ def apply_retention():
 
     # Read logs path and retention days from Airflow variables
     try:
-        logs_path = Variable.get('logs_path')
-        retention_days = int(Variable.get('retention_days'))
+        global logs_path, cron_schedule, retention_days
+        logs_path = Variable.get('logs_path', default='/opt/airflow/logs')
+        retention_days = int(Variable.get('retention_days', default=180))
+        cron_schedule = Variable.get('retention_cron_schedule', default='0 */8 * * *')
     except ValueError:
         logging.error("Error retrieving variables: logs_path or retention_days")
         return
@@ -68,7 +73,7 @@ default_args = {
 with DAG(
         dag_id='retention_dag',
         default_args=default_args,
-        schedule_interval=None,  # Run manually or through a trigger
+        schedule_interval=cron_schedule,  # Run manually or through a trigger
 ) as dag:
 
     # Define the Python task to call the retention function
