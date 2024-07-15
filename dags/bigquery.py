@@ -17,7 +17,7 @@ def ensure_dataset_exists(client, dataset_id):
 
 def upsert_data(**kwargs):
     print("======== this has been called ======")
-    hook = BigQueryHook(bigquery_conn_id='test_big')
+    hook = BigQueryHook(bigquery_conn_id='google_cloud_default')
     client = hook.get_client()
     print(client.project)
     print("======== after calling the hook ========")
